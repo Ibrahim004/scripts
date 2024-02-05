@@ -1,0 +1,13 @@
+
+## Usage:
+Make sure that python is installed on your machine. Link: https://www.python.org/downloads/
+
+Then run the follow command:
+`pip install -r requirements.txt`
+
+
+Then modify the script `download_pdfs.py` to include the links of all pdfs in urls and run the following command:
+
+`python download_pdfs.py`
+
+It will generate a file called "result.pdf" in the local containing all pages from the pdfs.
