@@ -88,6 +88,16 @@ void printList(Node* head)
     printf("\b\b\b   \n");
 }
 
+void freeList(Node* head)
+{
+    while(head != NULL)
+    {
+        Node* temp = head;
+        head = head->next;
+        free(head);
+    }
+}
+
 int main()
 {
     Node* head = createNode(5);
@@ -102,6 +112,8 @@ int main()
     x = appendToHead(x, 2);
     x = appendToHead(x, 1);
     printList(x);
-    
+
+    freeList(head);
+    freeList(x);
     return 0;
 }

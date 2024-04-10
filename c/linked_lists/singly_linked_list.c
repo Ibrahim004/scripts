@@ -84,6 +84,16 @@ void printList(Node* head)
     printf("\b\b  \n");
 }
 
+void freeList(Node* head)
+{
+    while(head != NULL)
+    {
+        Node* temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
 int main()
 {
     Node* n = createNode(5);
@@ -104,5 +114,7 @@ int main()
     Node* node2 = getNodeWithValue(x, 2);
     printf("Got node with value: %d, and next: %p\n", node2->data, node2->next);
 
+    freeList(n);
+    freeList(x);
     return 0;
 }
