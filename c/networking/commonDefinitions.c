@@ -1,7 +1,6 @@
 #include <netinet/in.h>
 #include "commonDefinitions.h"
 
-
 struct sockaddr_in getServerAddress()
 {
     struct sockaddr_in address;
