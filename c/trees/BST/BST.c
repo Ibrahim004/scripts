@@ -49,19 +49,6 @@ BST* insert(BST* root, int key, void* value)
     return root;
 }
 
-int findMax(BST* root)
-{
-    if(root == NULL)
-    {
-        return -1;
-    }
-    if(root->right == NULL)
-    {
-        return root->key;
-    }
-    return findMax(root->right);
-}
-
 BST* delete(BST* root, int key)
 {
     if(root == NULL)
