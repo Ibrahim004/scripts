@@ -4,7 +4,6 @@
 
 typedef struct BST {
     int key;
-    void* value;
     struct BST* left;
     struct BST* right;
 } BST;
@@ -17,26 +16,19 @@ BST* create_BST_node(int key, void* value){
         exit(EXIT_FAILURE);
     }
     node->key = key;
-    node->value = value;
     node->left = NULL;
     node->right = NULL;
     return node;
 }
 
-void free_BST_node(BST* root, void (*deleteValue)(void*))
+void free_BST_node(BST* root)
 {
-    if(deleteValue == NULL)
-    {
-        perror("deleteValue function pointer can't be null");
-        exit(EXIT_FAILURE);
-    }
     if(root == NULL)
     {
         return; // nothing to delete
     }
-    free_BST_node(root->left, deleteValue);
-    free_BST_node(root->right, deleteValue);
-    deleteValue(root->value);
+    free_BST_node(root->left);
+    free_BST_node(root->right);
     free(root);
 }
 
@@ -57,9 +49,70 @@ BST* insert(BST* root, int key, void* value)
     return root;
 }
 
-void delete(BST* root, int key)
+int findMax(BST* root)
 {
-    // todo
+    if(root == NULL)
+    {
+        return -1;
+    }
+    if(root->right == NULL)
+    {
+        return root->key;
+    }
+    return findMax(root->right);
+}
+
+BST* delete(BST* root, int key)
+{
+    if(root == NULL)
+    {
+        return root;
+    }
+    if(key < root->key)
+    {
+        root->left = delete(root->left, key);
+        return root;
+    }
+    if(key > root->key)
+    {
+        root->right = delete(root->right, key);
+        return root;
+    }
+    if(root->left == NULL)
+    {
+        BST* node = root->right;
+        free(root);
+        return node;
+    }
+    else if(root->right == NULL)
+    {
+        BST* node = root->left;
+        free(root);
+        return node;
+    }
+
+    // find successor on left side of root
+    BST* parent = root;
+    BST* successor = root->left;
+    while(successor->right != NULL)
+    {
+        parent = successor;
+        successor = successor->right;
+    }
+
+    root->key = successor->key;
+
+    // delete successor node
+    if(parent->left == successor)
+    {
+        parent->left = successor->left;
+    }
+    else
+    {
+        parent->right = successor->left;
+    }
+    free(successor);
+    return root;
 }
 
 BST* search(BST* root, int key)
@@ -101,6 +154,10 @@ int main()
     BST* result = search(root, 1);
     printf("Got result: %d\n", result->key);
 
-    free_BST_node(root, free);
+    root = delete(root, 8);
+    inOrderTraversal(root);
+    printf("\n");
+
+    free_BST_node(root);
     return 0;
 }
