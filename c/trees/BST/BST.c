@@ -14,23 +14,6 @@ void free_BST_node(BST* root)
     free(root);
 }
 
-// BST* insert(BST* root, int key)
-// {
-//     if(root == NULL)
-//     {
-//         return create_BST_node(key);
-//     }
-//     if(key <= root->key)
-//     {
-//         root->left = insert(root->left, key);
-//     }
-//     else
-//     {
-//         root->right = insert(root->right, key);
-//     }
-//     return root;
-// }
-
 BST* deleteNode(BST* root, int key)
 {
     if(root == NULL)
