@@ -1,25 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
-typedef struct BST {
-    int key;
-    struct BST* left;
-    struct BST* right;
-} BST;
-
-BST* create_BST_node(int key, void* value){
-    BST* node = (BST*) malloc(sizeof(BST));
-    if(node == NULL)
-    {
-        perror("Could not allocate node");
-        exit(EXIT_FAILURE);
-    }
-    node->key = key;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
+#include "BST.h"
 
 void free_BST_node(BST* root)
 {
@@ -32,24 +14,24 @@ void free_BST_node(BST* root)
     free(root);
 }
 
-BST* insert(BST* root, int key, void* value)
-{
-    if(root == NULL)
-    {
-        return create_BST_node(key, value);
-    }
-    if(key <= root->key)
-    {
-        root->left = insert(root->left, key, value);
-    }
-    else
-    {
-        root->right = insert(root->right, key, value);
-    }
-    return root;
-}
+// BST* insert(BST* root, int key)
+// {
+//     if(root == NULL)
+//     {
+//         return create_BST_node(key);
+//     }
+//     if(key <= root->key)
+//     {
+//         root->left = insert(root->left, key);
+//     }
+//     else
+//     {
+//         root->right = insert(root->right, key);
+//     }
+//     return root;
+// }
 
-BST* delete(BST* root, int key)
+BST* deleteNode(BST* root, int key)
 {
     if(root == NULL)
     {
@@ -57,12 +39,12 @@ BST* delete(BST* root, int key)
     }
     if(key < root->key)
     {
-        root->left = delete(root->left, key);
+        root->left = deleteNode(root->left, key);
         return root;
     }
     if(key > root->key)
     {
-        root->right = delete(root->right, key);
+        root->right = deleteNode(root->right, key);
         return root;
     }
     if(root->left == NULL)
@@ -128,20 +110,20 @@ void inOrderTraversal(BST* root)
 int main()
 {
     BST* root = NULL;
-    root = insert(root, 8, NULL);
-    insert(root, 1, NULL);
-    insert(root, 10, NULL);
-    insert(root, 8, NULL);
-    insert(root, 5, NULL);
-    insert(root, 11, NULL);
-    insert(root, 7, NULL);
+    root = insert(root, 8);
+    insert(root, 1);
+    insert(root, 10);
+    insert(root, 8);
+    insert(root, 5);
+    insert(root, 11);
+    insert(root, 7);
     inOrderTraversal(root);
     printf("\n");
 
     BST* result = search(root, 1);
     printf("Got result: %d\n", result->key);
 
-    root = delete(root, 8);
+    root = deleteNode(root, 8);
     inOrderTraversal(root);
     printf("\n");
 
