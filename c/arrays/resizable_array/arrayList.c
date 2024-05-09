@@ -81,13 +81,32 @@ int push_back(ArrayList* list, int x)
     return 0;
 }
 
+int getElementAt(ArrayList* list, int index)
+{
+    if(list == NULL || list->array == NULL || index >= list->size || index < 0)
+    {
+        return -1;
+    }
+    return list->array[index];
+}
+
+int putElementAt(ArrayList* list, int element, int index)
+{
+    if(list == NULL || list->array == NULL || index < 0 || index >= list->size)
+    {
+        return 0;
+    }
+    list->array[index] = element;
+    return 1;
+}
+
 void printArraList(ArrayList* list)
 {
     if(list != NULL)
     {
         for(int i = 0; i < list->size; i++)
         {
-            printf("%d ", list->array[i]);
+            printf("%d ", getElementAt(list, i));
         }
         printf("\n");
     }
